@@ -18,6 +18,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
+// Permitir solicitações do seu frontend (localhost)
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
