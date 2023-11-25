@@ -8,8 +8,10 @@ import com.br.sunioweb.editais.model.User;
 import com.br.sunioweb.editais.service.TokenService;
 import com.br.sunioweb.editais.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -37,32 +39,47 @@ public class AuthController {
         return userService.listAll();
     }
 
+    /**
+     * validando se as credenciais estão corretas
+     * @param  data(password, login)
+     * @return
+     */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthenticationDTO data)
+    public LoginResponseDTO login(@RequestBody AuthenticationDTO data)
     {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(),data.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((User) auth.getPrincipal());
-        User user = userService.findByLogin(data.login());
+        try
+        {
+            var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(),data.password());
+            var auth = this.authenticationManager.authenticate(usernamePassword);
+            var token = tokenService.generateToken((User) auth.getPrincipal());
+            User user = userService.findByLogin(data.login());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token,user));
+            return new LoginResponseDTO("Sucesso ao logar","200",token,user);
+        } catch (BadCredentialsException e) {
+             return new LoginResponseDTO("Usuário ou Senha incorreto","401",null,null);
+        }
+
     }
 
     @PostMapping("/register")
     public ResponseDTO register(@RequestBody RegisterDTO data)
     {
         if(this.userService.findByLogin(data.login()) != null)
-            return new ResponseDTO("Usuario já cadastrado", "406",null);
+            return new ResponseDTO("Usuário já cadastrado", "406",null);
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.login(), encryptedPassword, data.role());
 
         this.userService.save(newUser);
 
-        return new ResponseDTO("Usuario cadastrado!","200",null);
+        return new ResponseDTO("Usuário cadastrado!","200",null);
 
     }
 
+    /**
+     * Função para validar se o token do usuario está valido.
+     * @return
+     */
     @GetMapping("/validate")
     public ResponseDTO validate()
     {

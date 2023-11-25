@@ -19,6 +19,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
     @Autowired
     SecurityFilter securityFilter;
+
+    /**
+     * entra no 'addFilterBefore' para validar o token enviado quando preciso
+     * caso o token seja valido ou o request não precise de autenticação  entra no 'authotizeHttpRequest
+     * @return
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
     {
@@ -39,7 +46,7 @@ public class SecurityConfiguration {
     /**
      *
      * @param authenticationConfiguration instancia do authentication manages
-     * @return
+     * @return as authorities do usuario logado
      * @throws Exception
      */
     @Bean
@@ -47,6 +54,10 @@ public class SecurityConfiguration {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    /**
+     *
+     * @return Senha encriptada com BCrypt
+     */
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
