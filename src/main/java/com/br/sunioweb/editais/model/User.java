@@ -1,6 +1,7 @@
 package com.br.sunioweb.editais.model;
 
 import com.br.sunioweb.editais.ultil.EnumRoleUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,8 +21,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     private String login;
 
+    @JsonIgnore
     private String password;
 
 
@@ -33,10 +36,12 @@ public class User implements UserDetails {
         this.role = role;
         this.login = login;
         this.password = password;
-
     }
 
+
+
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
         if(this.role == EnumRoleUser.ADMIN) return  List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));

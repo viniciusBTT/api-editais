@@ -1,6 +1,7 @@
 package com.br.sunioweb.editais.config;
 
 
+import com.br.sunioweb.editais.model.User;
 import com.br.sunioweb.editais.service.TokenService;
 import com.br.sunioweb.editais.service.UserService;
 import jakarta.servlet.FilterChain;
@@ -31,8 +32,8 @@ public class SecurityFilter extends OncePerRequestFilter
         if(token != null)
         {
             var login = tokenService.validateToken(token);
-            UserDetails user = userService.findByLogin(login);
-
+            User newUser = userService.findByLogin(login);
+            UserDetails user = newUser;
             var authentication = new UsernamePasswordAuthenticationToken(user, null,user.getAuthorities());
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
