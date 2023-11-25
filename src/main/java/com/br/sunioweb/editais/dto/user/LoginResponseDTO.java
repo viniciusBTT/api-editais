@@ -1,4 +1,6 @@
 package com.br.sunioweb.editais.dto.user;
 
-public record LoginResponseDTO(String token) {
+import com.br.sunioweb.editais.model.User;
+
+public record LoginResponseDTO(String token, User user) {
 }
