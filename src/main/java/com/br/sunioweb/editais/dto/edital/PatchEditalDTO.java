@@ -1,4 +1,12 @@
 package com.br.sunioweb.editais.dto.edital;
 
-public record PatchEditalDTO(Long id, String name, String number) {
-}
+import java.util.Date;
+
+public record PatchEditalDTO(Long id,
+                             String name,
+                             String number,
+                             String description,
+                             Date datePublication,
+                             Boolean disponibility,
+                             Boolean visibility,
+                             Long userId) {}

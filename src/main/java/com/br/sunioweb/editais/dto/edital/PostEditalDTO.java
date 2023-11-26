@@ -1,4 +1,11 @@
 package com.br.sunioweb.editais.dto.edital;
 
-public record PostEditalDTO(String name, String number) {
-}
+import java.util.Date;
+
+public record PostEditalDTO(String name,
+                            String number,
+                            String description,
+                            Boolean disponibility,
+                            Boolean visibility,
+                            Long userId
+                            ) {}

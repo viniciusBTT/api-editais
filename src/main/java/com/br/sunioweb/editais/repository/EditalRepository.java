@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface EditalRepository extends JpaRepository<Edital,Long> {
-//    List<Edital> findByVisibility(boolean visibility);
+    List<Edital> findByVisibility(boolean visibility);
 }

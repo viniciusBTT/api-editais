@@ -61,6 +61,11 @@ public class AuthController {
 
     }
 
+    /**
+     *
+     * @param data (login, password e role)
+     * @return se o usuario foi cadastrado ou não
+     */
     @PostMapping("/register")
     public ResponseDTO register(@RequestBody RegisterDTO data)
     {
@@ -78,12 +83,12 @@ public class AuthController {
 
     /**
      * Função para validar se o token do usuario está valido.
-     * @return
+     * @return o usuarios autenticado ou null
      */
     @GetMapping("/validate")
-    public ResponseDTO validate()
+    public ResponseDTO validate(Long id)
     {
-        return new ResponseDTO("Autenticado","200",true);
+        return new ResponseDTO("Autenticado","200",userService.findById(id));
     }
 }
 

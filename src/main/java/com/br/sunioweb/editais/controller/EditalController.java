@@ -5,6 +5,7 @@ import com.br.sunioweb.editais.dto.edital.PatchEditalDTO;
 import com.br.sunioweb.editais.dto.edital.PostEditalDTO;
 import com.br.sunioweb.editais.model.Edital;
 import com.br.sunioweb.editais.service.EditalService;
+import com.br.sunioweb.editais.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,8 @@ public class EditalController {
 
     @Autowired
     private EditalService editalService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public ResponseDTO find (@RequestBody Long id)
@@ -36,17 +39,38 @@ public class EditalController {
     @PostMapping
     public ResponseDTO save (@RequestBody PostEditalDTO data)
     {
-        var newEdital =  editalService.save(new Edital(data.name(),data.number()));
+        try {
+            var newEdital =  new Edital(data.name(),data.number(),data.description(),
+                    data.disponibility(),data.visibility(),userService.findById(data.userId()));
+
+            editalService.save(newEdital);
 
 
-        return new ResponseDTO("Edital salvo com sucesso","200",newEdital);
+            return new ResponseDTO("Edital salvo com sucesso","200",newEdital);
+        }catch (Exception e)
+        {
+            return new ResponseDTO("Erro ao salvar o edital","500",null);
+        }
+
     }
 
     @PatchMapping
-    public ResponseDTO update(@RequestBody @Valid PatchEditalDTO data)
+    public ResponseDTO update(@RequestBody PatchEditalDTO data)
     {
-        var newEdital = editalService.save(new Edital(data.id(), data.name(), data.number()));
-        return new ResponseDTO("Edital atualizado","200",newEdital);
+        try {
+            System.out.println("entrouuuu");
+            var newEdital =  new Edital(data.id(),data.name(),data.number(),data.description(),
+                    data.disponibility(),data.visibility(),userService.findById(data.userId()),data.datePublication());
+
+            editalService.update(newEdital);
+            return new ResponseDTO("Edital atualizado","200",newEdital);
+        }catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return new ResponseDTO("Falha a atualizar o edital","403",null);
+
+        }
+
     }
 
     @DeleteMapping

@@ -38,27 +38,38 @@ public class Edital {
     private Date dateLastUpdate;
 
     //disponibilidade
-    private boolean disponibility;
+    private Boolean disponibility;
 
-    private boolean visibility;
+    private Boolean visibility;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    private User user;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
 
     public Edital(long codEdital){
         this.id = codEdital;
     }
 
-    public Edital(String name, String number)
+    public Edital(String name, String number,String description,Boolean disponibility, Boolean visibility, User user)
     {
         this.name = name;
         this.number = number;
+        this.description = description;
+        this.visibility = visibility;
+        this.disponibility = disponibility;
+        this.user = user;
+    }
+    public Edital(Long id,String name, String number,String description,Boolean disponibility, Boolean visibility, User user, Date datePublication )
+    {
+        this.id = id;
+        this.name = name;
+        this.number = number;
+        this.description = description;
+        this.visibility = visibility;
+        this.disponibility = disponibility;
+        this.user = user;
+        this.datePublication = datePublication;
     }
 
-    public Edital(Long id, String name, String number)
-    {
-        this.name = name;
-        this.number = number;
-        this.id = id;
-    }
+
+
 }
