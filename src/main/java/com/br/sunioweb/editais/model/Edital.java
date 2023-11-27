@@ -30,11 +30,11 @@ public class Edital {
     private String description;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm",timezone = "GMT-3")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date datePublication;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm",timezone = "GMT-3")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date dateLastUpdate;
 
     //disponibilidade
