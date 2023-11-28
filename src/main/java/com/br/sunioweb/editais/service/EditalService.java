@@ -35,4 +35,10 @@ public class EditalService {
     }
 
     public void delete(Long id){editalRepository.deleteById(id);}
+
+    public List<Edital> findAllVisibility(boolean visibility)
+    {
+        return editalRepository.findByVisibility(visibility);
+    }
+
 }

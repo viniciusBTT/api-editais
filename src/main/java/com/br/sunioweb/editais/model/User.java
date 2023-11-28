@@ -45,7 +45,6 @@ public class User implements UserDetails {
     {
         if(this.role == EnumRoleUser.ADMIN) return  List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
         else return  List.of(new SimpleGrantedAuthority("ROLE_USER"));
-
     }
 
     @Override
