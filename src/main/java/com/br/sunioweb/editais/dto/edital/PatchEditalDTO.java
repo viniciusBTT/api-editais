@@ -7,7 +7,7 @@ public record PatchEditalDTO(Long id,
                              String name,
                              String number,
                              String description,
-                             Date datePublication,
+                             String datePublication,
                              Boolean disponibility,
                              Boolean visibility,
                              Long userId) {}

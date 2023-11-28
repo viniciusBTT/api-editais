@@ -41,7 +41,6 @@ public class User implements UserDetails {
 
 
     @Override
-    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
         if(this.role == EnumRoleUser.ADMIN) return  List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));

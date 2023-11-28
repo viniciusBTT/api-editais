@@ -11,13 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @RestController
 @RequestMapping("/edital")
-@CrossOrigin(origins = "http://localhost:3000")
 public class EditalController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class EditalController {
     private UserService userService;
 
     @GetMapping
-    public ResponseDTO find (@RequestBody Long id)
+    public ResponseDTO find (@RequestParam Long id)
     {
         var edital = editalService.find(id);
 
@@ -38,8 +39,7 @@ public class EditalController {
     @GetMapping("/list")
     public ResponseDTO list ()
     {
-        var editaisList = editalService.list();
-        return new ResponseDTO("sucesso","200",editaisList);
+        return new ResponseDTO("sucesso","200",editalService.list());
     }
 
     @PostMapping
@@ -58,13 +58,24 @@ public class EditalController {
 
     }
 
+    /**
+     *
+     * @param data DTO que representado a atualização de edital
+     * @return o novo edital preenchido
+     */
     @PatchMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ROOT')")
     public ResponseDTO update(@RequestBody PatchEditalDTO data)
     {
-        try {
-            System.out.println("entrouuuu");
+        try
+        {
+            //Transformando a string de data em um objeto Date
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Date dataObjeto = dateFormat.parse(data.datePublication().trim());
+
+            //Montando um objeto do tipo edital
             var newEdital =  new Edital(data.id(),data.name(),data.number(),data.description(),
-                    data.disponibility(),data.visibility(),userService.findById(data.userId()),data.datePublication());
+                    data.disponibility(),data.visibility(),userService.findById(data.userId()),dataObjeto);
 
             editalService.update(newEdital);
             return new ResponseDTO("Edital atualizado","200",newEdital);
@@ -72,17 +83,19 @@ public class EditalController {
         {
             System.out.println(e.getMessage());
             return new ResponseDTO("Falha a atualizar o edital","403",null);
-
         }
 
     }
 
     @DeleteMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ROOT')")
     public ResponseDTO delete(@RequestParam Long id)
     {
         editalService.delete(id);
         return new ResponseDTO("Edital deletado","200",null);
     }
+
+
 
     
 
