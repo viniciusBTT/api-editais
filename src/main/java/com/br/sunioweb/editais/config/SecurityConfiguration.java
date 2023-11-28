@@ -35,9 +35,10 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/edital").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/edital").hasRole("ADMIN")
-                        .requestMatchers("/auth/register").hasRole("ADMIN")
+                        .requestMatchers("/auth/register").permitAll()
                         .requestMatchers("/auth/login").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/edital/teste").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

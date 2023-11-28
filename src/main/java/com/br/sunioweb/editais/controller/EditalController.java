@@ -10,8 +10,13 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 @RestController
 @RequestMapping("/edital")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EditalController {
 
     @Autowired
@@ -25,7 +30,7 @@ public class EditalController {
         var edital = editalService.find(id);
 
         if (edital == null)
-            return new ResponseDTO("Falha ao localizar o usuario","404",null);
+            return new ResponseDTO("Falha ao localizar o edital","404",null);
 
         return new ResponseDTO("sucesso","200",edital);
     }
@@ -79,4 +84,7 @@ public class EditalController {
         editalService.delete(id);
         return new ResponseDTO("Edital deletado","200",null);
     }
+
+    
+
 }

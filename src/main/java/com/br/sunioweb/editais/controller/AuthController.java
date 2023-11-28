@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 @RestController
@@ -56,7 +57,7 @@ public class AuthController {
 
             return new LoginResponseDTO("Sucesso ao logar","200",token,user);
         } catch (BadCredentialsException e) {
-             return new LoginResponseDTO("Usuário ou Senha incorreto","401",null,null);
+             return new LoginResponseDTO("Usuário e/ou Senha incorreto","401",null,null);
         }
 
     }

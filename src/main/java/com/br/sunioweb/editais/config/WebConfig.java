@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
      * Definindo quem pode fazer requests a API e quais metodos e end points podem ser acessados
      * @param registry
      */
+
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000") // Permita solicitações do seu frontend (localhost)
