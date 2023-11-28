@@ -8,6 +8,7 @@ import com.br.sunioweb.editais.service.EditalService;
 import com.br.sunioweb.editais.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -42,19 +43,17 @@ public class EditalController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ROOT')")
     public ResponseDTO save (@RequestBody PostEditalDTO data)
     {
         try {
             var newEdital =  new Edital(data.name(),data.number(),data.description(),
                     data.disponibility(),data.visibility(),userService.findById(data.userId()));
-
-            editalService.save(newEdital);
-
-
+            newEdital =  editalService.save(newEdital);
             return new ResponseDTO("Edital salvo com sucesso","200",newEdital);
         }catch (Exception e)
         {
-            return new ResponseDTO("Erro ao salvar o edital","500",null);
+            return new ResponseDTO("Erro ao salvar o edital","500",e.getMessage());
         }
 
     }

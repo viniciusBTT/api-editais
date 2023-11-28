@@ -15,4 +15,6 @@ public class EditaisApplication
 		SpringApplication.run(EditaisApplication.class, args);
 	}
 
+
+
 }

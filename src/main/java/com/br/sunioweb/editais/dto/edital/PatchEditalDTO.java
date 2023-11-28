@@ -1,5 +1,6 @@
 package com.br.sunioweb.editais.dto.edital;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public record PatchEditalDTO(Long id,
