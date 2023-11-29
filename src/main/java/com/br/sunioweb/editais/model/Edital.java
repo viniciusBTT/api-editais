@@ -3,19 +3,12 @@ package com.br.sunioweb.editais.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Edital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +38,7 @@ public class Edital {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
+    public Edital(){}
     public Edital(long codEdital){
         this.id = codEdital;
     }
@@ -70,6 +64,91 @@ public class Edital {
         this.datePublication = datePublication;
     }
 
+    @Override
+    public String toString() {
+        return "Edital{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", number='" + number + '\'' +
+                ", description='" + description + '\'' +
+                ", datePublication=" + datePublication +
+                ", dateLastUpdate=" + dateLastUpdate +
+                ", disponibility=" + disponibility +
+                ", visibility=" + visibility +
+                ", user=" + user +
+                '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getDatePublication() {
+        return datePublication;
+    }
+
+    public Date getDateLastUpdate() {
+        return dateLastUpdate;
+    }
+
+    public Boolean getDisponibility() {
+        return disponibility;
+    }
+
+    public Boolean getVisibility() {
+        return visibility;
+    }
+
+    public User getUser() {
+        return user;
+    }
 
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDatePublication(Date datePublication) {
+        this.datePublication = datePublication;
+    }
+
+    public void setDateLastUpdate(Date dateLastUpdate) {
+        this.dateLastUpdate = dateLastUpdate;
+    }
+
+    public void setDisponibility(Boolean disponibility) {
+        this.disponibility = disponibility;
+    }
+
+    public void setVisibility(Boolean visibility) {
+        this.visibility = visibility;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

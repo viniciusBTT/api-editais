@@ -16,7 +16,7 @@ public class EditalService {
 
     public List<Edital> list (){ return editalRepository.findAll();}
 
-    public Edital find(Long id){ return editalRepository.findById(id).orElse(null);}
+    public Edital findById(Long id){ return editalRepository.findById(id).orElse(null);}
 
     public  Edital save(Edital edital)
     {

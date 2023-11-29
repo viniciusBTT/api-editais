@@ -29,7 +29,7 @@ public class EditalController {
     @GetMapping
     public ResponseDTO find (@RequestParam Long id)
     {
-        var edital = editalService.find(id);
+        var edital = editalService.findById(id);
 
         if (edital == null)
             return new ResponseDTO("Falha ao localizar o edital","404",null);
@@ -55,7 +55,6 @@ public class EditalController {
         {
             return new ResponseDTO("Erro ao salvar o edital","500",e.getMessage());
         }
-
     }
 
     /**
