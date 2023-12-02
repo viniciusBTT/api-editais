@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/index")
+@CrossOrigin(origins = ("http://localhost:3000/"))
 public class IndexControler {
     @Autowired
     private EditalService editalService;

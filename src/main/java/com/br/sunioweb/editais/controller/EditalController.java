@@ -19,6 +19,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/edital")
+@CrossOrigin(origins = ("http://localhost:3000/"))
 public class EditalController {
 
     @Autowired

@@ -85,8 +85,11 @@ public class AuthController {
      * @return o usuarios autenticado ou null
      */
     @GetMapping("/validate")
-    public ResponseDTO validate(Long id)
+    public ResponseDTO validate(@RequestParam Long id)
     {
+        if (id == null)
+            return new ResponseDTO("Usuario não encontrado","403",null);
+
         return new ResponseDTO("Autenticado","200",userService.findById(id));
     }
 }

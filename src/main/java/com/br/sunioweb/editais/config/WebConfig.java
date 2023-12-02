@@ -14,13 +14,14 @@ public class WebConfig implements WebMvcConfigurer {
      * Definindo quem pode fazer requests a API e quais metodos e end points podem ser acessados
      * @param registry
      */
-
+    @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000") // Permita solicitações do seu frontend (localhost)
-                .allowedMethods("GET", "POST", "PUT", "DELETE") // Defina os métodos HTTP permitidos
-                .allowedHeaders("*") // Permita todos os cabeçalhos
-                .allowCredentials(true); // Permita credenciais (por exemplo, cookies)
+                .allowedOrigins("http://localhost:3000")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
     }
 
 }
