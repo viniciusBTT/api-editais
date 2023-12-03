@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -97,6 +98,11 @@ public class Edital {
 
     public Date getDatePublication() {
         return datePublication;
+    }
+    @Transient
+    public String getDatePublicationAsString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return (datePublication != null) ? dateFormat.format(datePublication) : null;
     }
 
     public Date getDateLastUpdate() {

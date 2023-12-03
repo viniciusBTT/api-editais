@@ -3,6 +3,8 @@ package com.br.sunioweb.editais.service;
 import com.br.sunioweb.editais.model.Edital;
 import com.br.sunioweb.editais.repository.EditalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -14,7 +16,23 @@ public class EditalService {
     @Autowired
     private EditalRepository editalRepository;
 
-    public List<Edital> list (){ return editalRepository.findAll();}
+    public Page<Edital> listAll(Pageable pageable, String seacrhParam)
+    {
+        if (seacrhParam != null && !seacrhParam.isEmpty()) {
+            return editalRepository.findAll(pageable);
+        } else {
+            return editalRepository.findAll(pageable);
+        }
+    }
+    public Page<Edital> listIndex(Pageable pageable, String seacrhParam)
+    {
+        if (seacrhParam != null && !seacrhParam.isEmpty()) {
+            return editalRepository.findVisibleEditaisByParam(
+                    seacrhParam, pageable);
+        } else {
+            return editalRepository.findByVisibility(true, pageable);
+        }
+    }
 
     public Edital findById(Long id){ return editalRepository.findById(id).orElse(null);}
 
@@ -36,9 +54,6 @@ public class EditalService {
 
     public void delete(Long id){editalRepository.deleteById(id);}
 
-    public List<Edital> findAllVisibility(boolean visibility)
-    {
-        return editalRepository.findByVisibility(visibility);
-    }
+
 
 }

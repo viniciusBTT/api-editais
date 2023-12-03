@@ -11,7 +11,6 @@ public interface RequesterRepository extends JpaRepository<Requester, Long> {
 
     List<Requester> findByNomenclature(String nomenclature);
 
-
     @Query(value = "SELECT * FROM requester r WHERE r.nomenclature = :nomenclature AND r.email = :email", nativeQuery = true)
     Requester findByNomenclatureAndEmail(@Param("nomenclature") String nomenclature, @Param("email") String email);
 
